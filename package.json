@@ -1,0 +1,18 @@
+{
+  "name": "tasktracker",
+  "version": "1.0.0",
+  "description": "A tool to enable faster tracking and triage of email.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "email",
+    "tool",
+    "task",
+    "tasks",
+    "tracker"
+  ],
+  "author": "Chris Lloyd-Jones <chris.lloyd-jones@avanade.com>",
+  "license": "UNLICENSED"
+}
