@@ -18,7 +18,9 @@
 <body ng-controller='emailShow' ng-keypress="pushDown($event)">
     <div class='container'>
         <div class='row header'>
-            <h4>TaskTracker</h4> <em>({{mailcount}})</em> <input type='button' value='Refresh' ng-click="refreshButton()"/>
+            <h4>TaskTracker</h4> <em>({{mailcount}}/25 emails)</em>
+            <input type='button' value='Refresh' ng-click="refreshButton()"/>
+            <input type='button' value='Show next email' ng-click="showNextEmail()"/>
         </div>
         <div class='row'>
             <section class='buttonBox col-md-2'>
@@ -31,10 +33,11 @@
                 </ul>
                 Do
                 <ul>
-                    <li label="Z"><s>Reply</s></li>
-                    <li label="X"><s>TicketReply</s></li>
+                    <li label="Z">Reply</li>
+                    <li label="X">ReplyAll</li>
                     <li label="C">Task</li>
                     <li label="V">Archive</li>
+                    <li label="B">CoEReplyAll</li>
                 </ul>
                 Invites
                 <ul>
@@ -50,6 +53,12 @@
                     <br/> To: {{to}}
                     <br/> CC: {{cc}}
                     <br/>{{DateTimeReceived}} {{daysAgo}}
+                </section>
+                <section class='form-group' ng-show="textprocess" id='formgroup'>
+                    <label for="bodytext">Body text:</label>
+                    <textarea class="form-control" rows="5" id="bodytext" ng-model="bodytext" autofocus></textarea>
+                    <input type='button' value='Cancel' ng-click="cancelForm()"/>
+                    <input type='button' value='Submit' ng-click="continueForm()"/> <em>(or CTRL + Enter to submit)</em>
                 </section>
                 <section ng-bind-html="body">
                     
