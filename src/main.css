@@ -1,0 +1,54 @@
+.header {
+	background-image: linear-gradient(-180deg, #ffd700 0%, #ff5700 100%);
+	font-family: SegoeUI-Semibold;
+	font-size: 18px;
+	color: #ffffff;
+	height: 66px;
+	display: block;
+	border-bottom: 1px solid #fff;
+	padding-left:24px;
+	padding-top:16.5px;
+}
+
+.header > h4 {
+	display: inline; 
+}
+
+.email {
+	background: #ededed;
+	font-size: 18px;
+	color: #000000;
+	border-left: 1px solid #fff;
+	font-family: SegoeUI-Light;
+}
+
+.buttonBox {
+	background: #ededed;
+	font-family: SegoeUI;
+	font-size: 18px;
+	color: #000000;
+}
+
+ul li {
+	font-family: SegoeUI-Light;
+}
+
+ul {
+	list-style-type: none;
+
+	padding-left: 0;
+}
+
+li:before {
+	content: attr(label);
+	background: #ce056a;
+	width: 26px;
+	height: 26px;
+	text-align: center;
+	color: #fff; /* A: */
+	font-family: SegoeUI-Semibold;
+	font-size: 18px;
+	margin-right: 8px;
+	margin-bottom: 4px;
+	display: inline-block;
+}

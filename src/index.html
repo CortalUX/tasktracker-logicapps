@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='taskTracker'>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TaskTracker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" media="all" href="main.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+</head>
+
+<body ng-controller='emailShow' ng-keypress="pushDown($event)">
+    <div class='container'>
+        <div class='row header'>
+            <h4>TaskTracker</h4> <em>({{mailcount}})</em> <input type='button' value='Refresh' ng-click="refreshButton()"/>
+        </div>
+        <div class='row'>
+            <section class='buttonBox col-md-2'>
+                File
+                <ul class='list'>
+                    <li label="A">Automation</li>
+                    <li label="S">Studio</li>
+                    <li label="D">Ad-hoc</li>
+                    <li label="F">HR</li>
+                </ul>
+                Do
+                <ul>
+                    <li label="Z"><s>Reply</s></li>
+                    <li label="X"><s>TicketReply</s></li>
+                    <li label="C">Task</li>
+                    <li label="V">Archive</li>
+                </ul>
+                Invites
+                <ul>
+                    <li label="1">Yes</li>
+                    <li label="2">Maybe</li>
+                    <li label="3">No</li>
+                </ul>
+            </section>
+            <section class='email table-bordered col-md-10'>
+                <section>
+                    Subject: {{subject}}
+                    <br/> From:{{from}}
+                    <br/> To: {{to}}
+                    <br/> CC: {{cc}}
+                    <br/>{{DateTimeReceived}} {{daysAgo}}
+                </section>
+                <section ng-bind-html="body">
+                    
+                </section>
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>
