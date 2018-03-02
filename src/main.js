@@ -1,10 +1,3 @@
-const url_actions="https://prod-04.uksouth.logic.azure.com:443/workflows/56254cab7b6c407f91aa7a94a9ef549d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=d33x49ZsEIF7xa-u5Q9BKU2Adf6jlnCJRtwwDd2hvoM";
-// const for sending actions
-const url_emails="https://prod-29.uksouth.logic.azure.com:443/workflows/b136a37912e6424590967522192b3b35/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=askQTpkRwhuZH70FPRiqCXgCyhrbMfiI6GxwtLOFuI4";
-// const for getting emails
-const email_sig=`<div class="WordSection1"><p class="MsoNormal"><span style="font-size:11.0pt">&nbsp;</span></p><p class="MsoNormal"><span style="font-size:11.0pt">&nbsp;</span></p><p class="MsoNormal"><span lang="EN-US" style="font-size:8.0pt; font-family:&quot;Segoe UI&quot;,sans-serif; color:#FF5800">Chris Lloyd-Jones</span><span lang="EN-US" style="font-size:8.0pt; font-family:&quot;Segoe UI&quot;,sans-serif; color:gray">| Intelligent Automation Enablement Lead</span></p><p class="MsoNormal"><span lang="EN-US" style="font-size:8.0pt; font-family:&quot;Segoe UI&quot;,sans-serif; color:gray">Intelligent Automation CoE<br></span><span lang="EN-US" style="font-size:8.0pt; font-family:&quot;Segoe UI&quot;,sans-serif; color:#FF5800">Avanade</span><span lang="EN-US" style="font-size:8.0pt; font-family:&quot;Segoe UI&quot;,sans-serif"> |<span style="color:gray">Direct: &#43;44 (0)20 81969867</span></span></p><p class="MsoNormal"><span style="font-size:11.0pt"><a href="http://www.avanade.com/"><span style="font-size:8.0pt; font-family:&quot;Segoe UI&quot;,sans-serif; color:#FF5800">www.avanade.com</span></a></span><span style="font-size:8.0pt; font-family:&quot;Segoe UI&quot;,sans-serif; color:#FF5800"></span></p>`
-
-
 var app = angular.module('taskTracker', []);
 
 app.controller('emailShow', function($scope, $http, $sce) {
