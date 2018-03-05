@@ -1,5 +1,16 @@
 var app = angular.module('taskTracker', []);
 
+app.directive('showFocus', function($timeout) {
+    return function(scope, element, attrs) {
+      scope.$watch(attrs.showFocus, 
+        function (newValue) { 
+          $timeout(function() {
+              newValue && element[0].focus();
+          });
+        },true);
+    };    
+  });
+
 app.controller('emailShow', function($scope, $http, $sce) {
     // Init variables
     // Reset display function
@@ -18,7 +29,7 @@ app.controller('emailShow', function($scope, $http, $sce) {
         $scope.from="";$scope.to="";$scope.cc="";
         $scope.DateTimeReceived="";$scope.daysAgo="";
         $scope.body="";$scope.subject="";$scope.Id="";
-        $scope.ConversationId="";
+        $scope.ConversationId="";$scope.bodytext="";
         $scope.textprocess=false;
         // unaware of a way to multi-assign as this is an object
     }
@@ -87,29 +98,45 @@ app.controller('emailShow', function($scope, $http, $sce) {
             }
         } else if (myEvent.keyCode === 13 && myEvent.ctrlKey) {
             $scope.continueForm();
+        } else if (myEvent.key=='`') {
+            console.log("Cancelling form, with logged '%s.'",$scope.bodytext);
+            $scope.cancelForm();
         }
     }
 
     $scope.sendAction = function(key,cid,mid) {
         let keyLowercase = key.toLowerCase();
-        if (keyLowercase=="z"||keyLowercase=="x"||keyLowercase=="b") {
-            $scope.textprocess=true;
-            $scope.continuekey=keyLowercase;
-        } else {
-            $scope.processedmails.push($scope.MessageId);
-            if (!isNaN(key)) {
-                keyLowercase+='.';
-                console.log("appended . to %s",key);
-            }
-            let dataObj = {
-                "action":keyLowercase,
-                "ConversationId":cid,
-                "MessageId":mid,
-                "body:":""
-            };
-            $scope.postForm(dataObj);
-            $scope.showNextEmail();
-            console.log("sending %s to be actioned",mid);
+        if (!isNaN(key)) {
+            keyLowercase+='.';
+            console.log("appended . to %s",key);
+        }
+        switch (keyLowercase) {
+            case "r":
+                $scope.refreshButton();
+            break;
+            case "z":
+            case "x":
+            case "b":
+                $scope.textprocess=true;
+                $scope.continuekey=keyLowercase;
+                $("#bodytext").focus();
+                setTimeout(function() {
+                    //å$el.find('textarea').focus();
+                    $("#bodytext").focus();
+                   }, 0);
+            break;
+            default:
+                $scope.processedmails.push($scope.MessageId);
+                let dataObj = {
+                    "action":keyLowercase,
+                    "ConversationId":cid,
+                    "MessageId":mid,
+                    "body:":""
+                };
+                $scope.postForm(dataObj);
+                $scope.showNextEmail();
+                console.log("sending %s to be actioned",mid);
+            break;
         }
     }
 
@@ -121,7 +148,8 @@ app.controller('emailShow', function($scope, $http, $sce) {
 
     $scope.cancelForm=function() {
         $scope.textprocess=false;
-        $scope.showNextEmail();
+        $scope.body=$sce.trustAsHtml("<div class='alert alert-info'><strong>Cancelled!</strong> Email not sent! '"+$scope.bodytext+"'</div>"+$scope.body);
+        $scope.bodytext="";
     }
 
     $scope.continueForm = function() {

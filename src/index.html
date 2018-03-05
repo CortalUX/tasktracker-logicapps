@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TaskTracker</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" media="all" href="main.css"/>
+    <link rel="stylesheet" media="all" href="main.css"/
+    <base target="_blank"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -57,9 +58,9 @@
                 </section>
                 <section class='form-group' ng-show="textprocess" id='formgroup'>
                     <label for="bodytext">Body text:</label>
-                    <textarea class="form-control" rows="5" id="bodytext" ng-model="bodytext" autofocus></textarea>
+                    <textarea class="form-control" rows="5" id="bodytext" ng-model="bodytext"  show-focus="textprocess" autofocus></textarea>
                     <input type='button' value='Cancel' ng-click="cancelForm()"/>
-                    <input type='button' value='Submit' ng-click="continueForm()"/> <em>(or CTRL + Enter to submit)</em>
+                    <input type='button' value='Submit' ng-click="continueForm()"/> <em>(CTRL + Enter to submit, ` to cancel)</em>
                 </section>
                 <section ng-bind-html="body">
                     
