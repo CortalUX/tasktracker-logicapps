@@ -87,6 +87,8 @@ app.controller('emailShow', function($scope, $http, $sce) {
     }
 
     $scope.pushDown = function(myEvent) {
+        console.log("Pressed %s key and %s keycode",myEvent.key, myEvent.keyCode);
+        console.log(myEvent.ctrlKey);
         if (!$scope.textprocess) {
             console.log("Pressed %s",myEvent.key);
             if ($scope.processedmails.indexOf($scope.MessageId) ==  -1) {
@@ -96,7 +98,8 @@ app.controller('emailShow', function($scope, $http, $sce) {
             } else {
                 console.log("Duplicate request for %s",$scope.MessageId);
             }
-        } else if (myEvent.keyCode === 13 && myEvent.ctrlKey) {
+        } else if (myEvent.ctrlKey && (myEvent.keyCode === 13 || myEvent.keyCode === 10)) {
+            // 13 = enter on mac/linux; 10 is used on some windows instances
             $scope.continueForm();
         } else if (myEvent.key=='`') {
             console.log("Cancelling form, with logged '%s.'",$scope.bodytext);

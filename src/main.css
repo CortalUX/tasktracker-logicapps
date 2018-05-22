@@ -1,6 +1,6 @@
 .header {
 	background-image: linear-gradient(-180deg, #ffd700 0%, #ff5700 100%);
-	font-family: SegoeUI-Semibold;
+	font-family: SegoeUI-Semibold,'Segoe UI';
 	font-size: 18px;
 	color: #ffffff;
 	height: 66px;
@@ -19,19 +19,19 @@
 	font-size: 18px;
 	color: #000000;
 	border-left: 1px solid #fff;
-	font-family: SegoeUI-Light;
+	font-family: SegoeUI-Light,'Segoe UI';
 	word-wrap: break-word;
 }
 
 .buttonBox {
 	background: #ededed;
-	font-family: SegoeUI;
+	font-family: SegoeUI,'Segoe UI';
 	font-size: 18px;
 	color: #000000;
 }
 
 ul li {
-	font-family: SegoeUI-Light;
+	font-family: SegoeUI-Light,'Segoe UI';
 }
 
 ul {
@@ -47,7 +47,7 @@ li:before {
 	height: 26px;
 	text-align: center;
 	color: #fff; /* A: */
-	font-family: SegoeUI-Semibold;
+	font-family: SegoeUI-Semibold,'Segoe UI';
 	font-size: 18px;
 	margin-right: 8px;
 	margin-bottom: 4px;
