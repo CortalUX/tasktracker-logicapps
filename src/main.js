@@ -87,8 +87,6 @@ app.controller('emailShow', function($scope, $http, $sce) {
     }
 
     $scope.pushDown = function(myEvent) {
-        console.log("Pressed %s key and %s keycode",myEvent.key, myEvent.keyCode);
-        console.log(myEvent.ctrlKey);
         if (!$scope.textprocess) {
             console.log("Pressed %s",myEvent.key);
             if ($scope.processedmails.indexOf($scope.MessageId) ==  -1) {

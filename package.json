@@ -1,7 +1,7 @@
 {
   "name": "tasktracker",
   "version": "1.0.0",
-  "description": "A tool to enable faster tracking and triage of email.",
+  "description": "A tool to enable faster tracking and triage of email. This is demonstration to show how you could use logic apps in order to pull down data from O365.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,6 @@
     "tasks",
     "tracker"
   ],
-  "author": "Chris Lloyd-Jones <chris.lloyd-jones@avanade.com>",
-  "license": "UNLICENSED"
+  "author": "Chris Lloyd-Jones",
+  "license": "MIT"
 }
