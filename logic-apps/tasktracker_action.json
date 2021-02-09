@@ -1,0 +1,348 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Mark_as_read": {
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['office365']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/Mail/MarkAsRead/@{encodeURIComponent(triggerBody()?['MessageId'])}"
+        },
+        "runAfter": {},
+        "type": "ApiConnection"
+      },
+      "Response": {
+        "inputs": {
+          "body": {
+            "output": "complete"
+          },
+          "schema": {
+            "properties": {
+              "output": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "statusCode": 200
+        },
+        "runAfter": {
+          "Switch": ["Succeeded"]
+        },
+        "type": "Response"
+      },
+      "Switch": {
+        "cases": {
+          "1_-_Accept_Invite_(without_comments)": {
+            "actions": {
+              "Yes_to_Invite": {
+                "inputs": {
+                  "body": {
+                    "SendResponse": true
+                  },
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/codeless/v1.0/me/events/@{encodeURIComponent(triggerBody()?['MessageId'])}/@{encodeURIComponent('accept')}"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "1."
+          },
+          "3_-_No_to_Invite_(without_comments)": {
+            "actions": {
+              "No_to_Invite": {
+                "inputs": {
+                  "body": {
+                    "SendResponse": true
+                  },
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/codeless/v1.0/me/events/@{encodeURIComponent(triggerBody()?['MessageId'])}/@{encodeURIComponent('decline')}"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "3."
+          },
+          "A_-_HR": {
+            "actions": {
+              "Move_email_to_Employment_and_HR": {
+                "inputs": {
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/Mail/Move/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                  "queries": {
+                    "folderPath": "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAAAC1GzSAAA="
+                  }
+                },
+                "metadata": {
+                  "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAAAC1GzSAAA=": "Employment & HR"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "a"
+          },
+          "C_-_Flag": {
+            "actions": {
+              "Flag_email_for_action": {
+                "inputs": {
+                  "body": {
+                    "flag": {
+                      "flagStatus": "flagged"
+                    }
+                  },
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "patch",
+                  "path": "/codeless/v1.0/me/messages/@{encodeURIComponent(triggerBody()?['MessageId'])}/flag"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "c"
+          },
+          "D_-_Feedback_-_emma": {
+            "actions": {
+              "Move_email_to_Feedback_-_Emma": {
+                "inputs": {
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/Mail/Move/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                  "queries": {
+                    "folderPath": "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAAPhJq43AAA="
+                  }
+                },
+                "metadata": {
+                  "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAAAC1GzVAAA=": "Ad-hoc & Correspondence",
+                  "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAAPhJq43AAA=": "Feedback - Emma"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "d"
+          },
+          "Feedback_-_Fergus": {
+            "actions": {
+              "Move_email_to_Fergus_feedback_folder": {
+                "inputs": {
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/v2/Mail/Move/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                  "queries": {
+                    "folderPath": "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAALxZXM0AAA="
+                  }
+                },
+                "metadata": {
+                  "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAALxZXM0AAA=": "Feedback - Ferg"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "f"
+          },
+          "S_-_Feedback_-_Me": {
+            "actions": {
+              "Move_email_to_FY20_Feedback_Folder": {
+                "inputs": {
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/Mail/Move/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                  "queries": {
+                    "folderPath": "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAAMzrqYFAAA="
+                  }
+                },
+                "metadata": {
+                  "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAABAA2V8AAA=": "Digital Studio",
+                  "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAAMzrqYFAAA=": "Feedback FY20"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "s"
+          },
+          "Tentatively_Accept_Invite_(without_comments)": {
+            "actions": {
+              "Tentative_to_Invite": {
+                "inputs": {
+                  "body": {
+                    "SendResponse": true
+                  },
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/codeless/api/v2.0/me/events/@{encodeURIComponent(triggerBody()?['MessageId'])}/@{encodeURIComponent('Tentatively Accept')}"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "2."
+          },
+          "V_-_Archive": {
+            "actions": {
+              "Move_email_to_Archive": {
+                "inputs": {
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/Mail/Move/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                  "queries": {
+                    "folderPath": "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAACvq6-AAAA="
+                  }
+                },
+                "metadata": {
+                  "Id::AAMkAGVkOTY3NDlkLTQ1Y2MtNDM3ZC04OWIzLWY2OWU4ZGUzYTE0OAAuAAAAAAD3HkvjQ4fjR71y03VTj6-AAQAbJ0OfIbHVTI9R0aR69zEqAACvq6-AAAA=": "Archive"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "v"
+          },
+          "X_-_ReplyAll": {
+            "actions": {
+              "ReplyAll": {
+                "inputs": {
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/Mail/ReplyTo/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                  "queries": {
+                    "comment": "@triggerBody()?['body:']",
+                    "replyAll": true
+                  }
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "x"
+          },
+          "Z_-_Reply": {
+            "actions": {
+              "Reply": {
+                "inputs": {
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['office365']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/Mail/ReplyTo/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                  "queries": {
+                    "comment": "@triggerBody()?['body:']",
+                    "replyAll": false
+                  }
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              }
+            },
+            "case": "z"
+          }
+        },
+        "default": {
+          "actions": {}
+        },
+        "expression": "@triggerBody()?['action']",
+        "runAfter": {
+          "Mark_as_read": ["Succeeded", "Failed", "TimedOut", "Skipped"]
+        },
+        "type": "Switch"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      }
+    },
+    "triggers": {
+      "manual": {
+        "inputs": {
+          "schema": {
+            "properties": {
+              "ConversationId": {
+                "type": "string"
+              },
+              "MessageId": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              },
+              "body:": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "kind": "Http",
+        "type": "Request"
+      }
+    }
+  },
+  "parameters": {
+    "$connections": {
+      "value": {
+        "office365": {
+          "connectionId": "/subscriptions/4ca6a49a-5377-4e96-9269-43580ab02af5/resourceGroups/tasktracker/providers/Microsoft.Web/connections/office365",
+          "connectionName": "office365",
+          "id": "/subscriptions/4ca6a49a-5377-4e96-9269-43580ab02af5/providers/Microsoft.Web/locations/uksouth/managedApis/office365"
+        }
+      }
+    }
+  }
+}

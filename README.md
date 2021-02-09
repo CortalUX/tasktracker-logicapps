@@ -10,11 +10,11 @@
 
 ## Installation
 
-> You need a logic app for responding to emails, and a logic app for downloading emails. These are not currently packaged - they will be.
+> You need a logic app for responding to emails, and a logic app for downloading emails.
 
 Open config.example.js.
 
-Change `url_actions` and `ùrl_emails` to the url for your logic app. Change `email_sig` to your email signature.
+Change `url_actions` and `ùrl_emails` to the urls for your logic apps. Change `email_sig` to your email signature.
 
 Rename config.example.js to config.js.
 
